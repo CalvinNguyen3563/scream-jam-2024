@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerInputManager : MonoBehaviour
 {
     public PlayerControls playerControls;
+    public PlayerManager player;
     public static PlayerInputManager instance;
 
     public Vector2 movementInput;
@@ -12,6 +13,7 @@ public class PlayerInputManager : MonoBehaviour
     public Vector2 cameraInput;
     public float cameraXInput;
     public float cameraYInput;
+    public bool sprintInput = false;
     private void Awake()
     {
         if (instance == null)
@@ -24,11 +26,12 @@ public class PlayerInputManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        player = GetComponent<PlayerManager>();
     }
 
     private void Update()
     {
-        HandleCameraInput();
+        HandleAllInput();
     }
 
     void OnEnable()
@@ -39,9 +42,30 @@ public class PlayerInputManager : MonoBehaviour
 
             playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
             playerControls.PlayerCamera.CameraRotation.performed += i => cameraInput = i.ReadValue<Vector2>();
+            playerControls.PlayerMovement.Sprinting.performed += i => sprintInput = true;
+            playerControls.PlayerMovement.Sprinting.canceled += i => sprintInput = false;
+
         }
 
         playerControls.Enable();
+    }
+
+    private void HandleAllInput()
+    {
+        HandleCameraInput();
+        HandleSprintInput();
+    }
+
+    private void HandleSprintInput()
+    {
+        if (sprintInput)
+        {
+            player.playerLocomotionManager.HandleSprinting();
+        }
+        else
+        {
+            player.playerLocomotionManager.isSprinting = false;
+        }
     }
 
     private void HandleCameraInput()

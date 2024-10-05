@@ -8,8 +8,15 @@ public class PlayerLocomotionManager : MonoBehaviour
     public PlayerManager player;
 
     public float moveSpeed = 5f;
+    public float sprintMoveSpeed = 7f;
     public float gravityForce = -13f;
     public float maxSpeed = 10f;
+    public float maxSprintSpeed = 15f;
+
+    
+
+    [Header("Movement Flags")]
+    public bool isSprinting = false;
 
     private void Awake()
     {
@@ -18,7 +25,7 @@ public class PlayerLocomotionManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -45,24 +52,63 @@ public class PlayerLocomotionManager : MonoBehaviour
 
     private void HandlePlayerMovement()
     {
-       Vector2 dir =  PlayerInputManager.instance.GetMovementInputDirection();
+        Vector2 dir =  PlayerInputManager.instance.GetMovementInputDirection();
 
-       Vector3 moveVelocity = dir.y * player.orientation.forward * moveSpeed;
-       moveVelocity += dir.x * player.orientation.right * moveSpeed;
-       moveVelocity = new Vector3(moveVelocity.x, player.rb.velocity.y, moveVelocity.z);
+        Vector3 moveVelocity = Vector3.zero;
+        float speedCap = 0;
+
+        if (!isSprinting)
+        {
+            speedCap = maxSpeed;
+            moveVelocity = dir.y * player.orientation.forward * moveSpeed;
+            moveVelocity += dir.x * player.orientation.right * moveSpeed;
+            moveVelocity = new Vector3(moveVelocity.x, player.rb.velocity.y, moveVelocity.z);
+        }
+        else
+        {
+            speedCap = maxSprintSpeed;
+            moveVelocity = dir.y * player.orientation.forward * sprintMoveSpeed;
+            moveVelocity += dir.x * player.orientation.right * sprintMoveSpeed;
+            moveVelocity = new Vector3(moveVelocity.x, player.rb.velocity.y, moveVelocity.z);
+        }
 
         if (dir != Vector2.zero)
         {
-            if (player.rb.velocity.magnitude < maxSpeed)
+            Vector2 currentVelocity = player.rb.velocity;
+
+            // Totally made by Andy
+            // Calculate the dot product between movement direction and current velocity
+            float dotProduct = Vector2.Dot(currentVelocity.normalized, dir.normalized);
+
+            // If the dot product is negative, it means the player is trying to move in the opposite direction
+            if (dotProduct < 0)
             {
-                player.rb.velocity = moveVelocity;
+                // Apply counter force to reduce the current velocity before applying new movement
+                Vector2 counterForce = -currentVelocity * 4f;  // Adjust multiplier for how strong the counter force is
+                player.rb.AddForce(counterForce);
+            }
+
+            if (player.rb.velocity.magnitude < speedCap)
+            {
+                player.rb.AddForce(moveVelocity);
+            }
+            else
+            {
+                player.rb.velocity = player.rb.velocity.normalized * speedCap;
             }
         }
         else
         {
-            float adjustedVelocity = Mathf.Lerp(player.rb.velocity.x, 0f, 0.5f);
+            float adjustedVelocity = Mathf.Lerp(player.rb.velocity.x, 0f, 0.2f);
             player.rb.velocity = new Vector3(adjustedVelocity, moveVelocity.y, moveVelocity.z);
         }
 
+    }
+
+    public void HandleSprinting()
+    {
+        // Only allow sprinting if running forward
+        if (PlayerInputManager.instance.GetMovementInputDirection().y > 0f)
+            isSprinting = true;
     }
 }
