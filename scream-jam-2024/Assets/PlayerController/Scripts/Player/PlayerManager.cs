@@ -10,6 +10,8 @@ public class PlayerManager : MonoBehaviour
     public Transform orientation;
     public Camera cam;
     public CinemachineVirtualCamera vcam;
+    public GameObject cameraHolder;
+    public PlayerAnimatorManager playerAnimatorManager;
 
     [Header("Player Classes")]
     public PlayerLocomotionManager playerLocomotionManager;
@@ -27,7 +29,7 @@ public class PlayerManager : MonoBehaviour
     }
     void Start()
     {
-        
+        playerAnimatorManager = WorldGameObjectStorage.Instance.cameraHolder.GetComponentInChildren<PlayerAnimatorManager>();
     }
 
     // Update is called once per frame

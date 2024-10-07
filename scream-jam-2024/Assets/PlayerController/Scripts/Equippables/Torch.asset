@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8ef4a17eed6e9249a5bcc7b9ba04811, type: 3}
   m_Name: Torch
   m_EditorClassIdentifier: 
+  itemName: Torch
   itemPrefab: {fileID: 7812431259103352742, guid: 9ddd0273dccc6a147af57310ff39b3e8, type: 3}
-  localPosition: {x: -0.071, y: 0.1, z: 0.05}
-  localRotation: {x: 351.31, y: 289.69998, z: 180.252}
-  localScale: {x: 4, y: 4, z: 6}
-  equip: {fileID: 0}
-  idle: {fileID: 0}
-  run: {fileID: 0}
+  localPosition: {x: -0.03, y: 0.096, z: 0.033}
+  localRotation: {x: 350.87244, y: 292.0224, z: 179.84009}
+  localScale: {x: 3, y: 3, z: 4}
+  idle: {fileID: 7400000, guid: 020c6ead542223249b02050611540cee, type: 2}
+  walk: {fileID: 7400000, guid: e9c96e48f803f2e4a838c46acd4b6b83, type: 2}
+  run: {fileID: 7400000, guid: 03dbe363e005e8b48bb30f6c6913e609, type: 2}
   use: {fileID: 0}
+  overrideController: {fileID: 22100000, guid: 03202acbeb4e99a48a2fc3a318b705ec, type: 2}

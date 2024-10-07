@@ -18,6 +18,7 @@ public class PlayerCamera : MonoBehaviour
     public CinemachineVirtualCamera currentVirtualCamera;
     public CinemachineBasicMultiChannelPerlin channelPerlin;
 
+
     [Header("Movement FOV")]
     public float walkingFOV;
     public float sprintFOV = 95f;
@@ -27,6 +28,7 @@ public class PlayerCamera : MonoBehaviour
     public float idleAMP = 1f;
     public float idleFREQ = 1f;
 
+    [Header("Camera Modes")]
     public GameObject idleCam;
     public GameObject walkCam;
     public GameObject runCam;
@@ -99,4 +101,6 @@ public class PlayerCamera : MonoBehaviour
         cinemachineVirtualCameras[camIndex].SetActive(true);
         currentVirtualCamera = cinemachineVirtualCameras[camIndex].GetComponent<CinemachineVirtualCamera>();
     }
+
+
 }

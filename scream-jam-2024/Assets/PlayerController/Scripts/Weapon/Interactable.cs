@@ -4,7 +4,6 @@ using UnityEngine;
 
 public interface Interactable 
 {
-    public void Interact();
-
-
+    Item GetItemInfo();
+    void DestroyItem();
 }
