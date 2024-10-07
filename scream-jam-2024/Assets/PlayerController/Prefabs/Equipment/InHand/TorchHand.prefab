@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6640387327339273026}
   - component: {fileID: 2054530547170460310}
   - component: {fileID: 5989795019972926968}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 2720471197071020867}
   - component: {fileID: 2438061482195356680}
   - component: {fileID: 525988113694631750}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Light002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5087,7 +5087,7 @@ GameObject:
   - component: {fileID: 3439591226537596620}
   - component: {fileID: 7155078311359637133}
   - component: {fileID: 5797785825020843785}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BaseFire002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9934,7 +9934,7 @@ GameObject:
   - component: {fileID: 1640779380674248405}
   - component: {fileID: 8738432414561975140}
   - component: {fileID: 2630854471979992935}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Light001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14776,7 +14776,7 @@ GameObject:
   - component: {fileID: 112054602160625654}
   - component: {fileID: 8091755470471209480}
   - component: {fileID: 861729941586057407}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Smoke001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19618,7 +19618,7 @@ GameObject:
   - component: {fileID: 1943484636810847287}
   - component: {fileID: 7203156367937969212}
   - component: {fileID: 2524751529149762537}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Star001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24496,7 +24496,7 @@ GameObject:
   - component: {fileID: 1644742689626584390}
   - component: {fileID: 2774874850848215937}
   - component: {fileID: 1747643536263839746}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fire002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29338,7 +29338,7 @@ GameObject:
   - component: {fileID: 7921209850625262347}
   - component: {fileID: 4549527339016975655}
   - component: {fileID: 3005507236488034958}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TorchHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}

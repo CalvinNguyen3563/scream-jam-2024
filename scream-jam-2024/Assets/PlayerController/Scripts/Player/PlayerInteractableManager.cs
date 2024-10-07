@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEditor.Search;
 using UnityEngine;
 
@@ -20,7 +21,8 @@ public class PlayerInteractableManager : MonoBehaviour
     public int itemSlots = 5;
     public Item[] items;
     public int itemCount = 0;
-    public Item currentEquippedItem;
+    public Item currentEquippedItem = null;
+    public GameObject rightHandObject = null;
 
 
 
@@ -38,6 +40,7 @@ public class PlayerInteractableManager : MonoBehaviour
     {
         DetectInteractables();
         HandleItemPickup();
+        HandleInventoryInput();
     }
 
     private void DetectInteractables()
@@ -84,9 +87,30 @@ public class PlayerInteractableManager : MonoBehaviour
         }
     }
 
+    public void HandleInventoryInput()
+    {
+        for (int i = 1; i < itemSlots + 1; i++)
+        {
+
+            if (Input.GetKeyDown(i.ToString()))  
+            {
+                Item referencedItem = items[i - 1];
+                if ((currentEquippedItem != null && referencedItem != null) && currentEquippedItem.name == referencedItem.name)
+                {
+                    return;
+                }
+                Destroy(rightHandObject);
+                EquipItem(referencedItem);
+                player.playerAnimatorManager.LinkItemAnimationProfile(referencedItem);
+                
+                currentEquippedItem = referencedItem;
+            }
+        }
+    }
+
     public void HandleItemPickup()
     {
-        if (itemCount >= 5)
+        if (itemCount >= itemSlots)
             return;
 
         if (Input.GetKeyDown(KeyCode.E) && previousOutline != null)
@@ -94,26 +118,23 @@ public class PlayerInteractableManager : MonoBehaviour
             Interactable interactable = previousOutline.GetComponent<Interactable>();
             items[itemCount] = interactable.GetItemInfo();
             interactable.DestroyItem();
-            EquipItem(items[itemCount]);
-            player.playerAnimatorManager.LinkItemAnimationProfile(items[itemCount]);
             ++itemCount;
         }
     }
 
     public void EquipItem(Item item)
     {
-        if (item.itemPrefab != null)
+        if (item != null)
         {
-            GameObject newItem = Instantiate(item.itemPrefab, rightHand.transform, false);
-            newItem.transform.localRotation = Quaternion.Euler(item.localRotation);
-            newItem.transform.localPosition = item.localPosition;
-            newItem.transform.localScale = item.localScale;
+            if (item.itemPrefab != null)
+            {
+                rightHandObject = Instantiate(item.itemPrefab, rightHand.transform, false);
+                rightHandObject.transform.localRotation = Quaternion.Euler(item.localRotation);
+                rightHandObject.transform.localPosition = item.localPosition;
+                rightHandObject.transform.localScale = item.localScale;
+            }
         }
-        else
-        {
-            player.playerAnimatorManager.SwitchToUnarmedState();
-            currentEquippedItem = null;
-        }
+ 
     }
 
     

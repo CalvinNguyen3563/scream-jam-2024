@@ -6,13 +6,13 @@ AnimatorOverrideController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TorchOverride
+  m_Name: Torch
   m_Controller: {fileID: 9100000, guid: 673496372ada8444eab1e4903933d1c7, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: 7400000, guid: d161027160be2024ebcde90cf5b87d0d, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: 020c6ead542223249b02050611540cee, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: 575cec497ae49cf49b6a110ce45158a4, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: e9c96e48f803f2e4a838c46acd4b6b83, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: c791316cff5da2748b9b5132d9f9ea33, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: 6f67b58ec84a0894d88976961c5a44dc, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: 03dbe363e005e8b48bb30f6c6913e609, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: 6bfb3c0196ae8a542bcacbe1312ed4db, type: 2}

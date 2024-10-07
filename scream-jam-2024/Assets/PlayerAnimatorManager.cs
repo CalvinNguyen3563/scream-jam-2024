@@ -73,12 +73,19 @@ public class PlayerAnimatorManager : MonoBehaviour
 
     public void LinkItemAnimationProfile(Item item)
     {
-        animator.runtimeAnimatorController = item.overrideController;
-
-        if (rigs[item.name] != null)
+        if (item != null)
         {
-            Tuple<Rig, float> rig = rigs[item.name];
-            StartCoroutine(SmoothRig(rig.Item1, rig.Item1.weight, rig.Item2));
+            animator.runtimeAnimatorController = item.overrideController;
+            animator.CrossFade("Equip", 0f);
+            if (rigs[item.name] != null)
+            {
+                Tuple<Rig, float> rig = rigs[item.name];
+                StartCoroutine(SmoothRig(rig.Item1, rig.Item1.weight, rig.Item2));
+            }
+        }
+        else
+        {
+            SwitchToUnarmedState();
         }
     }
 
