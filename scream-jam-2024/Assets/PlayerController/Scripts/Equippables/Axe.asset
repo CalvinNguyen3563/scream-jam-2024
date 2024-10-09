@@ -12,4 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8ef4a17eed6e9249a5bcc7b9ba04811, type: 3}
   m_Name: Axe
   m_EditorClassIdentifier: 
-  itemPrefab: {fileID: 0}
+  itemName: 
+  itemPrefab: {fileID: 8178135074865658327, guid: d9594cebf7039e742aa3ed9604e91347, type: 3}
+  localPosition: {x: 0.037, y: 0.076, z: 0.029}
+  localRotation: {x: 10.25174, y: 358.45538, z: 163.5038}
+  localScale: {x: 0.01, y: 0.01, z: 0.007}
+  idle: {fileID: 7400000, guid: 8561ebc2670e3574dbcea1adf2b69a86, type: 2}
+  walk: {fileID: 0}
+  run: {fileID: 0}
+  use: {fileID: 0}
+  overrideController: {fileID: 22100000, guid: 9991fc7773b521e4e858ca6650e46725, type: 2}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEditor.Search;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerInteractableManager : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class PlayerInteractableManager : MonoBehaviour
     public float range = 2f;
     private Outline previousOutline;
     private List<Outline> outlines = new();
+    public float itemSwitchCooldown = 0.4f;
+    public bool canSwitch = true;
 
     [Header("Inventory")]
     public int itemSlots = 5;
@@ -92,20 +95,42 @@ public class PlayerInteractableManager : MonoBehaviour
         for (int i = 1; i < itemSlots + 1; i++)
         {
 
-            if (Input.GetKeyDown(i.ToString()))  
+
+
+            if (Input.GetKeyDown(i.ToString()))
             {
-                Item referencedItem = items[i - 1];
-                if ((currentEquippedItem != null && referencedItem != null) && currentEquippedItem.name == referencedItem.name)
+                if (canSwitch)
+                {
+                    canSwitch = false;
+                    StartCoroutine(ResetSwitchCooldown());
+                }
+                else
                 {
                     return;
                 }
-                Destroy(rightHandObject);
+                Item referencedItem = items[i - 1];
+                if (((currentEquippedItem != null && referencedItem != null) && currentEquippedItem.name == referencedItem.name) || referencedItem == null)
+                {
+                    player.playerAnimatorManager.leftIKTarget = null;
+                    Destroy(rightHandObject);
+                    StartCoroutine(player.playerAnimatorManager.LinkItemAnimationProfile(null)) ;    
+                    rightHandObject = null;
+                    currentEquippedItem = null;
+                    return;
+                }
+                //Destroy(rightHandObject);
                 EquipItem(referencedItem);
-                player.playerAnimatorManager.LinkItemAnimationProfile(referencedItem);
+               // player.playerAnimatorManager.LinkItemAnimationProfile(referencedItem);
                 
                 currentEquippedItem = referencedItem;
             }
         }
+    }
+
+    public IEnumerator ResetSwitchCooldown()
+    {
+        yield return new WaitForSeconds(itemSwitchCooldown);
+        canSwitch = true;
     }
 
     public void HandleItemPickup()
@@ -128,11 +153,23 @@ public class PlayerInteractableManager : MonoBehaviour
         {
             if (item.itemPrefab != null)
             {
+                GameObject previous = rightHandObject;
+                player.playerAnimatorManager.leftIKTarget = null;
                 rightHandObject = Instantiate(item.itemPrefab, rightHand.transform, false);
                 rightHandObject.transform.localRotation = Quaternion.Euler(item.localRotation);
                 rightHandObject.transform.localPosition = item.localPosition;
                 rightHandObject.transform.localScale = item.localScale;
+                StartCoroutine(player.playerAnimatorManager.LinkItemAnimationProfile(item));
+                if (previous != null)
+                {
+                    Destroy(previous);
+                }
+                
             }
+        }
+        else
+        {
+            player.playerAnimatorManager.LinkItemAnimationProfile(null);
         }
  
     }

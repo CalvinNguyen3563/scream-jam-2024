@@ -14,7 +14,12 @@ public class PlayerAnimatorManager : MonoBehaviour
 
     [Header("Rigs")]
     public Dictionary<string, Tuple<Rig, float>> rigs;
+    public Dictionary<string, TwoBoneIKConstraint> leftArmIK;
+    public RigBuilder rigBuilder;
     public Rig torchRig;
+    public Rig axeRig;
+    public TwoBoneIKConstraint axeLeftArm;
+    public GameObject leftIKTarget;
 
     [Header("Unarmed State")]
     public Item unarmed;
@@ -25,7 +30,12 @@ public class PlayerAnimatorManager : MonoBehaviour
         controller = animator.runtimeAnimatorController;
 
         rigs = new Dictionary<string, Tuple<Rig, float>>() {
-            { "Torch", new Tuple<Rig, float>(torchRig, 0.6f) } 
+            { "Torch", new Tuple<Rig, float>(torchRig, 0.6f) },
+            { "Axe", new Tuple<Rig, float>(axeRig, 0.75f) }
+        };
+
+        leftArmIK = new Dictionary<string, TwoBoneIKConstraint> {
+            {"Axe", axeLeftArm}
         };
     }
 
@@ -36,6 +46,11 @@ public class PlayerAnimatorManager : MonoBehaviour
     private void Update()
     {
         HandleMovementAnimations();
+
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            animator.SetTrigger("UseItem");
+        }
     }
 
     private void LateUpdate()
@@ -68,20 +83,56 @@ public class PlayerAnimatorManager : MonoBehaviour
             StartCoroutine(SmoothRig(rigs[rig].Item1, rigs[rig].Item1.weight, 0));
         }
 
+        foreach (var rig in leftArmIK.Keys)
+        {
+            leftArmIK[rig].data.target = null;
+        }
+
         animator.runtimeAnimatorController = unarmed.overrideController;
     }
 
-    public void LinkItemAnimationProfile(Item item)
+    public IEnumerator LinkItemAnimationProfile(Item item)
     {
+        yield return null;
         if (item != null)
         {
+
             animator.runtimeAnimatorController = item.overrideController;
             animator.CrossFade("Equip", 0f);
-            if (rigs[item.name] != null)
+            if (rigs.ContainsKey(item.name))
             {
                 Tuple<Rig, float> rig = rigs[item.name];
                 StartCoroutine(SmoothRig(rig.Item1, rig.Item1.weight, rig.Item2));
             }
+
+
+            // Control left arm IK
+            if (leftArmIK.ContainsKey(item.name))
+            {
+                if (leftIKTarget != null)
+                {
+                    leftArmIK[item.name].data.target = leftIKTarget.transform;
+                }
+
+                foreach (var rig in leftArmIK.Keys)
+                {
+                    if (rig != item.name)
+                    {
+                        leftArmIK[rig].data.target = null;
+                    }
+                }
+            }
+            else
+            {
+                foreach (var rig in leftArmIK.Keys)
+                {
+                    leftArmIK[rig].data.target = null;
+                }
+            }
+
+            rigBuilder.enabled = false;
+            rigBuilder.enabled = true;
+            
         }
         else
         {
@@ -102,5 +153,7 @@ public class PlayerAnimatorManager : MonoBehaviour
 
             yield return null;
         }
+
+        rig.weight = end;
     }
 }
