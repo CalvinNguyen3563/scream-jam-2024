@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.PlasticSCM.Editor.WebApi;
 using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -26,6 +27,7 @@ public class PlayerInteractableManager : MonoBehaviour
     public int itemCount = 0;
     public Item currentEquippedItem = null;
     public GameObject rightHandObject = null;
+    public int itemIndex = -1;
 
 
 
@@ -116,13 +118,20 @@ public class PlayerInteractableManager : MonoBehaviour
                     StartCoroutine(player.playerAnimatorManager.LinkItemAnimationProfile(null)) ;    
                     rightHandObject = null;
                     currentEquippedItem = null;
+                    itemIndex = -1;
                     return;
                 }
                 //Destroy(rightHandObject);
+                itemIndex = i - 1;
                 EquipItem(referencedItem);
                // player.playerAnimatorManager.LinkItemAnimationProfile(referencedItem);
                 
                 currentEquippedItem = referencedItem;
+            }
+
+            if (Input.GetKeyDown(KeyCode.G))
+            {
+                DropItem(currentEquippedItem, itemIndex);
             }
         }
     }
@@ -169,9 +178,57 @@ public class PlayerInteractableManager : MonoBehaviour
         }
         else
         {
-            player.playerAnimatorManager.LinkItemAnimationProfile(null);
+            StartCoroutine(player.playerAnimatorManager.LinkItemAnimationProfile(null));
+            itemIndex = -1;
         }
  
+    }
+
+    public void DropItem(Item item, int index)
+    {
+        if (item != null && item.dropPrefab != null)
+        {
+            GameObject dropItem = Instantiate(item.dropPrefab, WorldGameObjectStorage.Instance.player.transform.position, Quaternion.identity);
+            Rigidbody itemRb = dropItem.GetComponent<Rigidbody>();
+            Collider itemCollider = dropItem.GetComponent<Collider>();
+
+            if (itemRb != null && itemCollider != null)
+            {
+                float time = 0.5f;
+                StartCoroutine(IgnorePlayerCollider(itemCollider, time));
+
+                Vector3 forwardDirection = WorldGameObjectStorage.Instance.mainCam.transform.forward;
+                float horizontalForce = 3f;  
+                float verticalForce = 5f;  
+                Vector3 arcForce = forwardDirection * horizontalForce + Vector3.up * verticalForce;
+                itemRb.AddForce(arcForce, ForceMode.Impulse);
+
+                Vector3 spin = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * 5f; 
+                itemRb.angularVelocity = spin;
+            }
+            Destroy(rightHandObject);
+            StartCoroutine(player.playerAnimatorManager.LinkItemAnimationProfile(null));
+            items[index] = null;
+            --itemCount;
+            currentEquippedItem = null;
+            rightHandObject = null;
+            itemIndex = -1;
+
+            player.playerAnimatorManager.leftIKTarget = null;
+    
+        }
+    }
+
+    private IEnumerator IgnorePlayerCollider(Collider collider, float time)
+    {
+        Physics.IgnoreCollision(collider, WorldGameObjectStorage.Instance.player.playerCollider, true);
+
+        yield return new WaitForSeconds(time);
+
+        if (collider != null)
+        {
+            Physics.IgnoreCollision(collider, WorldGameObjectStorage.Instance.player.playerCollider, false);
+        }
     }
 
     

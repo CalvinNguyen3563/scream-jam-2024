@@ -13,9 +13,7 @@ public class Item : ScriptableObject
     public Vector3 localScale = Vector3.one;
 
     [Header("Animation Info")]
-    public AnimationClip idle;
-    public AnimationClip walk;
-    public AnimationClip run;
+    public GameObject dropPrefab;
     public AnimationClip use;
     public AnimatorOverrideController overrideController;
 

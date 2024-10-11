@@ -46,16 +46,23 @@ public class PlayerAnimatorManager : MonoBehaviour
     private void Update()
     {
         HandleMovementAnimations();
-
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            animator.SetTrigger("UseItem");
-        }
+        HandleUseAnimations();
+       
     }
 
     private void LateUpdate()
     {
 
+    }
+
+    private void HandleUseAnimations()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse1) && 
+            player.playerInteractableManager.currentEquippedItem != null && 
+            player.playerInteractableManager.currentEquippedItem.use != null)
+        {
+            animator.SetTrigger("UseItem");
+        }
     }
 
     private void HandleMovementAnimations()

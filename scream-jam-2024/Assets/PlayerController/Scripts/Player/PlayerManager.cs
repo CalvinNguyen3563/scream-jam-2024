@@ -12,6 +12,8 @@ public class PlayerManager : MonoBehaviour
     public CinemachineVirtualCamera vcam;
     public GameObject cameraHolder;
     public PlayerAnimatorManager playerAnimatorManager;
+    public PlayerInteractableManager playerInteractableManager;
+    public Collider playerCollider;
 
     [Header("Player Classes")]
     public PlayerLocomotionManager playerLocomotionManager;

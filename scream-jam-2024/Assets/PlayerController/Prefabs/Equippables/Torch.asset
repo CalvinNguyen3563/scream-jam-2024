@@ -17,8 +17,6 @@ MonoBehaviour:
   localPosition: {x: -0.03, y: 0.096, z: 0.033}
   localRotation: {x: 350.87244, y: 292.0224, z: 179.84009}
   localScale: {x: 3, y: 3, z: 4}
-  idle: {fileID: 7400000, guid: 020c6ead542223249b02050611540cee, type: 2}
-  walk: {fileID: 7400000, guid: c791316cff5da2748b9b5132d9f9ea33, type: 2}
-  run: {fileID: 7400000, guid: 03dbe363e005e8b48bb30f6c6913e609, type: 2}
+  dropPrefab: {fileID: 6476866729082016429, guid: a960c30268ea8a4498132a48e8988404, type: 3}
   use: {fileID: 0}
   overrideController: {fileID: 22100000, guid: 03202acbeb4e99a48a2fc3a318b705ec, type: 2}
