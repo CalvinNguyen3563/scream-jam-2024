@@ -103,7 +103,7 @@ public class PlayerAnimatorManager : MonoBehaviour
         yield return null;
         if (item != null)
         {
-
+            SwitchToUnarmedState();
             animator.runtimeAnimatorController = item.overrideController;
             animator.CrossFade("Equip", 0f);
             if (rigs.ContainsKey(item.name))

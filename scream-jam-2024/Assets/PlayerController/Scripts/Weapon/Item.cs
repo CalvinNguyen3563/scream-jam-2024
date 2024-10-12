@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(menuName = "Item/Equippables")]
 public class Item : ScriptableObject
 {
     [Header("Item Info")]
+    public Sprite icon;
     public string itemName;
     public GameObject itemPrefab;
     public Vector3 localPosition;

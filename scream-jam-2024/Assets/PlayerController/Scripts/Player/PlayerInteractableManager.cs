@@ -9,6 +9,7 @@ using UnityEngine.UIElements;
 public class PlayerInteractableManager : MonoBehaviour
 {
     public PlayerManager player;
+    public PlayerInventoryUIManager playerInventoryUIManager;
     public GameObject cam;
     public GameObject rightHand;
 
@@ -27,7 +28,7 @@ public class PlayerInteractableManager : MonoBehaviour
     public int itemCount = 0;
     public Item currentEquippedItem = null;
     public GameObject rightHandObject = null;
-    public int itemIndex = -1;
+    public int currentItemIndex = -1;
 
 
 
@@ -39,6 +40,7 @@ public class PlayerInteractableManager : MonoBehaviour
     private void Start()
     {
         player = WorldGameObjectStorage.Instance.player;
+        playerInventoryUIManager = PlayerInventoryUIManager.Instance;
     }
 
     private void Update()
@@ -111,27 +113,46 @@ public class PlayerInteractableManager : MonoBehaviour
                     return;
                 }
                 Item referencedItem = items[i - 1];
-                if (((currentEquippedItem != null && referencedItem != null) && currentEquippedItem.name == referencedItem.name) || referencedItem == null)
+
+
+                if (referencedItem == null)
                 {
                     player.playerAnimatorManager.leftIKTarget = null;
                     Destroy(rightHandObject);
-                    StartCoroutine(player.playerAnimatorManager.LinkItemAnimationProfile(null)) ;    
+                    StartCoroutine(player.playerAnimatorManager.LinkItemAnimationProfile(null));
                     rightHandObject = null;
                     currentEquippedItem = null;
-                    itemIndex = -1;
+                    currentItemIndex = i - 1;
+                    playerInventoryUIManager.UpdateSelectBorder(i - 1);
                     return;
                 }
-                //Destroy(rightHandObject);
-                itemIndex = i - 1;
-                EquipItem(referencedItem);
-               // player.playerAnimatorManager.LinkItemAnimationProfile(referencedItem);
-                
-                currentEquippedItem = referencedItem;
+                else
+                {
+                    if (currentItemIndex != i - 1)
+                    {
+                        player.playerAnimatorManager.leftIKTarget = null;
+                        Destroy(rightHandObject);
+                        currentItemIndex = i - 1;
+                        EquipItem(referencedItem);
+                        currentEquippedItem = referencedItem;
+                        playerInventoryUIManager.UpdateSelectBorder(i - 1);
+                    }
+                    else
+                    {
+                        player.playerAnimatorManager.leftIKTarget = null;
+                        Destroy(rightHandObject);
+                        StartCoroutine(player.playerAnimatorManager.LinkItemAnimationProfile(null));
+                        rightHandObject = null;
+                        currentEquippedItem = null;
+                        currentItemIndex = -1;
+                        playerInventoryUIManager.UpdateSelectBorder(-1);
+                    }
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.G))
             {
-                DropItem(currentEquippedItem, itemIndex);
+                DropItem(currentEquippedItem, currentItemIndex);
             }
         }
     }
@@ -150,9 +171,35 @@ public class PlayerInteractableManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && previousOutline != null)
         {
             Interactable interactable = previousOutline.GetComponent<Interactable>();
-            items[itemCount] = interactable.GetItemInfo();
+
+            int i = 0;
+            bool foundValidSlot = false;
+            while (i < items.Length && !foundValidSlot)
+            {
+                if (items[i] == null)
+                {
+                    foundValidSlot = true;
+                }
+                else
+                {
+                    ++i;
+                }
+            }
+
+            items[i] = interactable.GetItemInfo();
+            playerInventoryUIManager.LinkItemIcon(interactable.GetItemInfo(), i);
             interactable.DestroyItem();
+
+            if (i == currentItemIndex)
+            {
+                EquipItem(items[i]);
+                currentEquippedItem = items[i];
+            }
+
+
             ++itemCount;
+
+
         }
     }
 
@@ -174,12 +221,12 @@ public class PlayerInteractableManager : MonoBehaviour
                     Destroy(previous);
                 }
                 
+                playerInventoryUIManager.UpdateSelectBorder(currentItemIndex);
             }
         }
         else
         {
             StartCoroutine(player.playerAnimatorManager.LinkItemAnimationProfile(null));
-            itemIndex = -1;
         }
  
     }
@@ -206,15 +253,16 @@ public class PlayerInteractableManager : MonoBehaviour
                 Vector3 spin = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * 5f; 
                 itemRb.angularVelocity = spin;
             }
+
             Destroy(rightHandObject);
             StartCoroutine(player.playerAnimatorManager.LinkItemAnimationProfile(null));
             items[index] = null;
             --itemCount;
             currentEquippedItem = null;
             rightHandObject = null;
-            itemIndex = -1;
-
             player.playerAnimatorManager.leftIKTarget = null;
+
+            playerInventoryUIManager.UnlinkItemIcon(index);
     
         }
     }
