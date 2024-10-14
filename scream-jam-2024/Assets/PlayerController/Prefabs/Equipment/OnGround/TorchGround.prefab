@@ -29536,6 +29536,7 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+  interactMsg: Pick Up Torch
 --- !u!114 &5823360533934733969
 MonoBehaviour:
   m_ObjectHideFlags: 0

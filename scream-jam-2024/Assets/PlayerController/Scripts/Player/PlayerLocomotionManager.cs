@@ -64,13 +64,17 @@ public class PlayerLocomotionManager : MonoBehaviour
             moveVelocity += dir.x * player.orientation.right * moveSpeed;
             moveVelocity = new Vector3(moveVelocity.x, player.rb.velocity.y, moveVelocity.z);
         }
-        else
+        else if (PlayerStatsManager.Instance.Stamina > 0f) 
         {
+            //Handle stamina
             speedCap = maxSprintSpeed;
             moveVelocity = dir.y * player.orientation.forward * sprintMoveSpeed;
             moveVelocity += dir.x * player.orientation.right * sprintMoveSpeed;
             moveVelocity = new Vector3(moveVelocity.x, player.rb.velocity.y, moveVelocity.z);
+           
+            PlayerStatsManager.Instance.DecreaseStamina();
         }
+        
 
         if (dir != Vector2.zero)
         {
@@ -108,7 +112,14 @@ public class PlayerLocomotionManager : MonoBehaviour
     public void HandleSprinting()
     {
         // Only allow sprinting if running forward
-        if (PlayerInputManager.instance.GetMovementInputDirection().y > 0f)
+        if (PlayerInputManager.instance.GetMovementInputDirection().y > 0f && PlayerStatsManager.Instance.Stamina > 0f)
+        {
             isSprinting = true;
+        }
+        else
+        {
+            isSprinting = false;
+        }
+   
     }
 }

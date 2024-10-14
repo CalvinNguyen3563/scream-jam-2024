@@ -24,6 +24,9 @@ public class PlayerAnimatorManager : MonoBehaviour
     [Header("Unarmed State")]
     public Item unarmed;
 
+    [Header("Item Usage")]
+    public float attackStaminaValue = 15f;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -57,11 +60,10 @@ public class PlayerAnimatorManager : MonoBehaviour
 
     private void HandleUseAnimations()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse1) && 
-            player.playerInteractableManager.currentEquippedItem != null && 
-            player.playerInteractableManager.currentEquippedItem.use != null)
+        if (Input.GetKeyDown(KeyCode.Mouse1) && player.playerInteractableManager.rightHandObject.TryGetComponent<UseItem>(out UseItem item))
         {
-            animator.SetTrigger("UseItem");
+            item.UseItem();
+            
         }
     }
 

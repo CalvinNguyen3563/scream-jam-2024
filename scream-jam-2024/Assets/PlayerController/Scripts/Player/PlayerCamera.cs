@@ -34,8 +34,11 @@ public class PlayerCamera : MonoBehaviour
     public GameObject runCam;
     public GameObject[] cinemachineVirtualCameras;
 
+    private bool[] isLerping;
+
     private void Awake()
     {
+        isLerping = new bool[3];
         cinemachineVirtualCameras = new GameObject[] { idleCam, walkCam, runCam };
     }
 
@@ -94,12 +97,38 @@ public class PlayerCamera : MonoBehaviour
         {
             if (camIndex != i)
             {
-                cinemachineVirtualCameras[i].SetActive(false);
+                if (!isLerping[i])
+                {
+                    isLerping[i] = true;
+                    StartCoroutine(LerpBackToOriginCoroutine(cinemachineVirtualCameras[i], i));
+                    cinemachineVirtualCameras[i].SetActive(false);
+                }
             }
         }
 
         cinemachineVirtualCameras[camIndex].SetActive(true);
         currentVirtualCamera = cinemachineVirtualCameras[camIndex].GetComponent<CinemachineVirtualCamera>();
+    }
+
+   
+    public IEnumerator LerpBackToOriginCoroutine(GameObject cam, int camIndex)
+    {
+        Vector3 startPosition = cam.transform.localPosition;
+        Vector3 targetPosition = Vector3.zero;
+        float timeElapsed = 0f;
+        float lerpDuration = 1f;
+
+        while (timeElapsed < lerpDuration)
+        {
+            cam.transform.localPosition = Vector3.Lerp(startPosition, targetPosition, timeElapsed / lerpDuration);
+            timeElapsed += Time.deltaTime;
+
+            // Wait for next frame
+            yield return null;
+        }
+
+        cam.transform.localPosition = targetPosition;
+        isLerping[camIndex] = false;
     }
 
 

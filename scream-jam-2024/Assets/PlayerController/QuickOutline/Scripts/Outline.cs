@@ -16,6 +16,7 @@ using UnityEngine;
 public class Outline : MonoBehaviour {
   private static HashSet<Mesh> registeredMeshes = new HashSet<Mesh>();
 
+
   public enum Mode {
     OutlineAll,
     OutlineVisible,
@@ -77,6 +78,8 @@ public class Outline : MonoBehaviour {
   private Renderer[] renderers;
   private Material outlineMaskMaterial;
   private Material outlineFillMaterial;
+
+    public string interactMsg;
 
   private bool needsUpdate;
 

@@ -77,9 +77,11 @@ public class PlayerInteractableManager : MonoBehaviour
                 {
                     if (previousOutline != null)
                     {
+                        playerInventoryUIManager.SetInteractText(false);
                         previousOutline.enabled = false;
                     }
                     outline.enabled = true;
+                    playerInventoryUIManager.SetInteractText(true, outline.interactMsg);
                     previousOutline = outline;
                 }
             }
@@ -89,6 +91,7 @@ public class PlayerInteractableManager : MonoBehaviour
             if (previousOutline != null)
             {
                 previousOutline.enabled = false;
+                playerInventoryUIManager.SetInteractText(false);
                 previousOutline = null;
             }
         }
@@ -171,7 +174,7 @@ public class PlayerInteractableManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && previousOutline != null)
         {
             Interactable interactable = previousOutline.GetComponent<Interactable>();
-
+            playerInventoryUIManager.SetInteractText(false);
             int i = 0;
             bool foundValidSlot = false;
             while (i < items.Length && !foundValidSlot)
@@ -265,6 +268,19 @@ public class PlayerInteractableManager : MonoBehaviour
             playerInventoryUIManager.UnlinkItemIcon(index);
     
         }
+    }
+
+    public void DestroyEquippedItem()
+    {
+        Destroy(rightHandObject);
+        StartCoroutine(player.playerAnimatorManager.LinkItemAnimationProfile(null));
+        items[currentItemIndex] = null;
+        --itemCount;
+        currentEquippedItem = null;
+        rightHandObject = null;
+        player.playerAnimatorManager.leftIKTarget = null;
+
+        playerInventoryUIManager.UnlinkItemIcon(currentItemIndex);
     }
 
     private IEnumerator IgnorePlayerCollider(Collider collider, float time)

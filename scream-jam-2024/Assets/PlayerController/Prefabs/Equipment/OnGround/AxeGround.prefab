@@ -207,6 +207,7 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+  interactMsg: Pick Up Axe
 --- !u!114 &715811473860733075
 MonoBehaviour:
   m_ObjectHideFlags: 0

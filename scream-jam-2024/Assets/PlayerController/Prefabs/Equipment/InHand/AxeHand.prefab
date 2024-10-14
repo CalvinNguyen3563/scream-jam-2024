@@ -124,6 +124,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3300165318892704360}
   - component: {fileID: 4847467288105143297}
+  - component: {fileID: 6290929794059149404}
   m_Layer: 8
   m_Name: AxeHand
   m_TagString: Untagged
@@ -162,3 +163,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftHandIKTarget: {fileID: 4477278868089106509}
   itemName: AxeHand
+--- !u!114 &6290929794059149404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8178135074865658327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41ccdffaecb9d924cba0ee2165c9c7b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackStaminaValue: 20
+  cooldown: 1.25
+  canAttack: 1
