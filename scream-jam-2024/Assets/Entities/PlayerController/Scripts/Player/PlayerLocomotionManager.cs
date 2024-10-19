@@ -39,6 +39,7 @@ public class PlayerLocomotionManager : MonoBehaviour
     private void FixedUpdate()
     {
         HandlePlayerMovement();
+        //HandleGravity();
     }
 
     private void HandleGravity()
@@ -89,7 +90,7 @@ public class PlayerLocomotionManager : MonoBehaviour
             {
                 // Apply counter force to reduce the current velocity before applying new movement
                 Vector2 counterForce = -currentVelocity * 4f;  // Adjust multiplier for how strong the counter force is
-                player.rb.AddForce(counterForce);
+                player.rb.AddForce(new Vector3(counterForce.x, 0f, 0f));
             }
 
             if (player.rb.velocity.magnitude < speedCap)
@@ -103,8 +104,9 @@ public class PlayerLocomotionManager : MonoBehaviour
         }
         else
         {
-            float adjustedVelocity = Mathf.Lerp(player.rb.velocity.x, 0f, 0.2f);
-            player.rb.velocity = new Vector3(adjustedVelocity, moveVelocity.y, moveVelocity.z);
+            float adjustedVelocityX = Mathf.Lerp(player.rb.velocity.x, 0f, 0.2f);
+            float adjustedVelocityZ = Mathf.Lerp(player.rb.velocity.z, 0f, 0.2f);
+            player.rb.velocity = new Vector3(adjustedVelocityX, moveVelocity.y, adjustedVelocityZ);
         }
 
     }

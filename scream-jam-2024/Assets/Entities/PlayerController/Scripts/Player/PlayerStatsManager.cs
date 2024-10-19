@@ -96,7 +96,7 @@ public class PlayerStatsManager : MonoBehaviour
 
     public void IncreaseHealth(float value)
     {
-        if (Health + value < maxHealth)
+        if (Health + value > maxHealth)
         {
             Health = maxHealth;
         }

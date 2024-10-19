@@ -24381,6 +24381,7 @@ GameObject:
   - component: {fileID: 6316775113148776396}
   - component: {fileID: 2591105417231218127}
   - component: {fileID: 3424225444794974102}
+  - component: {fileID: 4831447356620388800}
   m_Layer: 0
   m_Name: TorchGround
   m_TagString: Untagged
@@ -24453,6 +24454,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.1, y: 0.11, z: 0.61956596}
   m_Center: {x: 9.313226e-10, y: 0.0000000018626451, z: 0.062283516}
+--- !u!114 &4831447356620388800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6476866729082016429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca716c8f820cf447a7129c836df1b02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  burnOpening: 1.5
+  canBurn: 1
+  whatIsEnemy:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!1 &6551833340938819886
 GameObject:
   m_ObjectHideFlags: 0

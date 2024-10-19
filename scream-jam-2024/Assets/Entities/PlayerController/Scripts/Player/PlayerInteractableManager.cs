@@ -174,33 +174,40 @@ public class PlayerInteractableManager : MonoBehaviour
         {
             Interactable interactable = previousOutline.GetComponent<Interactable>();
             playerInventoryUIManager.SetInteractText(false);
-            int i = 0;
-            bool foundValidSlot = false;
-            while (i < items.Length && !foundValidSlot)
+
+            if (interactable.GetItemState() == Interactable.itemState.inHand)
             {
-                if (items[i] == null)
+                int i = 0;
+                bool foundValidSlot = false;
+                while (i < items.Length && !foundValidSlot)
                 {
-                    foundValidSlot = true;
+                    if (items[i] == null)
+                    {
+                        foundValidSlot = true;
+                    }
+                    else
+                    {
+                        ++i;
+                    }
                 }
-                else
+
+                items[i] = interactable.GetItemInfo();
+                playerInventoryUIManager.LinkItemIcon(interactable.GetItemInfo(), i);
+                interactable.DestroyItem();
+
+                if (i == currentItemIndex)
                 {
-                    ++i;
+                    EquipItem(items[i]);
+                    currentEquippedItem = items[i];
                 }
+
+
+                ++itemCount;
             }
-
-            items[i] = interactable.GetItemInfo();
-            playerInventoryUIManager.LinkItemIcon(interactable.GetItemInfo(), i);
-            interactable.DestroyItem();
-
-            if (i == currentItemIndex)
+            else if (interactable.GetItemState() == Interactable.itemState.interactable)
             {
-                EquipItem(items[i]);
-                currentEquippedItem = items[i];
+                interactable.PerformSpecialAction();
             }
-
-
-            ++itemCount;
-
 
         }
     }
@@ -247,7 +254,7 @@ public class PlayerInteractableManager : MonoBehaviour
                 StartCoroutine(IgnorePlayerCollider(itemCollider, time));
 
                 Vector3 forwardDirection = WorldGameObjectStorage.Instance.mainCam.transform.forward;
-                float horizontalForce = 3f;  
+                float horizontalForce = 5f;  
                 float verticalForce = 5f;  
                 Vector3 arcForce = forwardDirection * horizontalForce + Vector3.up * verticalForce;
                 itemRb.AddForce(arcForce, ForceMode.Impulse);

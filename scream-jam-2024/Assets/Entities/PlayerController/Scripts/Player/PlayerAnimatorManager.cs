@@ -27,6 +27,7 @@ public class PlayerAnimatorManager : MonoBehaviour
     [Header("Item Usage")]
     public float attackStaminaValue = 15f;
 
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -60,7 +61,9 @@ public class PlayerAnimatorManager : MonoBehaviour
 
     private void HandleUseAnimations()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse1) && player.playerInteractableManager.rightHandObject.TryGetComponent<UseItem>(out UseItem item))
+        if (Input.GetKeyDown(KeyCode.Mouse1) && 
+            player.playerInteractableManager.rightHandObject != null &&
+            player.playerInteractableManager.rightHandObject.TryGetComponent<UseItem>(out UseItem item))
         {
             item.UseItem();
             
