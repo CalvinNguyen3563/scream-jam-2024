@@ -20,12 +20,18 @@ public class PlayerLocomotionManager : MonoBehaviour
 
     private void Awake()
     {
+        
         player = GetComponent<PlayerManager>();
     }
     // Start is called before the first frame update
     void Start()
     {
-        
+        var allWindZones = GameObject.FindObjectsOfType<WindZone>();
+
+        foreach (var zone in allWindZones)
+        {
+            zone.windMain = 0f;
+        }
     }
 
     // Update is called once per frame
