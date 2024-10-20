@@ -8,6 +8,7 @@ public class WorldGameObjectStorage : MonoBehaviour
     public PlayerManager player;
     public GameObject cameraHolder;
     public GameObject mainCam;
+    
 
     private void Awake()
     {

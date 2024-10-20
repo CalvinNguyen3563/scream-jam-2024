@@ -16,10 +16,6 @@ public class MonsterPatrolState : MonsterBaseState
 
     public override void UpdateState(MonsterStateManager stateManager)
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            stateManager.SwitchState(stateManager.chaseState);
-        }
 
         if (stateManager.agent.remainingDistance <= stateManager.agent.stoppingDistance) //done with path
         {
@@ -58,9 +54,12 @@ public class MonsterPatrolState : MonsterBaseState
         Vector3 direction = WorldGameObjectStorage.Instance.player.transform.position - stateManager.transform.position;
         float angle = Vector3.Angle(stateManager.orientation.transform.forward, direction);
 
-        if (stateManager.playerInRadius && angle < 40)
+        if (stateManager.playerInRadius && angle < 75)
         {
-            stateManager.SwitchState(stateManager.chaseState);
+            if (!Physics.Raycast(stateManager.transform.position, WorldGameObjectStorage.Instance.player.transform.position - stateManager.transform.position, out RaycastHit hit, stateManager.patrolRange, stateManager.whatIsObstacle))
+            {
+                stateManager.SwitchState(stateManager.chaseState);
+            }
         }
     }
 

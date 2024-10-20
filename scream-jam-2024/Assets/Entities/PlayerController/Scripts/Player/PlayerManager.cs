@@ -24,6 +24,9 @@ public class PlayerManager : MonoBehaviour
     public float groundCheckRadius = 2f;
     public LayerMask whatIsGround;
 
+    [Header("Layer Mask")]
+    public LayerMask whatIsEnemy;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();

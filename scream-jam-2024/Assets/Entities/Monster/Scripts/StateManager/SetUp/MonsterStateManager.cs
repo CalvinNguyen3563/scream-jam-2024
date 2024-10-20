@@ -17,6 +17,7 @@ public class MonsterStateManager : MonoBehaviour
     public MonsterPatrolState patrolState = new MonsterPatrolState();
     public MonsterChaseState chaseState = new MonsterChaseState();
     public MonsterStunState stunState = new MonsterStunState();
+    public MonsterDeathState deathState = new MonsterDeathState();
 
     [Header("Speed")]
     public float walkingAcceleration = 5f;
@@ -36,6 +37,7 @@ public class MonsterStateManager : MonoBehaviour
 
     [Header("LayerMask")]
     public LayerMask whatIsPlayer;
+    public LayerMask whatIsObstacle;
 
     
    
@@ -54,10 +56,16 @@ public class MonsterStateManager : MonoBehaviour
 
     private void Update()
     {
-        animator.SetFloat("velocity", agent.velocity.magnitude / runningSpeed);
+        if (MonsterStatsManager.Instance.health <= 0)
+        {
+            SwitchState(deathState);
+        }
+        
         currentState.UpdateState(this);
 
         float turnMovement = Vector3.Dot(transform.right, agent.velocity.normalized);
+
+        animator.SetFloat("velocity", agent.velocity.magnitude / runningSpeed);
         animator.SetFloat("horizontal", turnMovement);
     }
 
