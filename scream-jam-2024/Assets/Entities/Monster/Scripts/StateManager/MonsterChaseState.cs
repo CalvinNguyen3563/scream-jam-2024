@@ -11,7 +11,6 @@ public class MonsterChaseState : MonsterBaseState
     float elapsedTime = 0f;
     float attackCooldown = 2f;
     bool canAttack = true;
-    float minDistanceToPlayer = 5f;
     public override void EnterState(MonsterStateManager stateManager)
     {
         stateManager.agent.acceleration = stateManager.runningAcceleration;
