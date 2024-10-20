@@ -26,10 +26,11 @@ public class PlayerLocomotionManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var allWindZones = GameObject.FindObjectsOfType<WindZone>();
+        var allWindZones = FindObjectsOfType<WindZone>();
 
         foreach (var zone in allWindZones)
         {
+            Debug.Log("e");
             zone.windMain = 0f;
         }
     }
@@ -92,16 +93,16 @@ public class PlayerLocomotionManager : MonoBehaviour
             float dotProduct = Vector2.Dot(currentVelocity.normalized, dir.normalized);
 
             // If the dot product is negative, it means the player is trying to move in the opposite direction
-            if (dotProduct < 0)
+           /* if (dotProduct < 0)
             {
                 // Apply counter force to reduce the current velocity before applying new movement
-                Vector2 counterForce = -currentVelocity * 4f;  // Adjust multiplier for how strong the counter force is
+                Vector2 counterForce = -currentVelocity * 8f;  // Adjust multiplier for how strong the counter force is
                 player.rb.AddForce(new Vector3(counterForce.x, 0f, 0f));
-            }
+            }*/
 
             if (player.rb.velocity.magnitude < speedCap)
             {
-                player.rb.AddForce(moveVelocity);
+                player.rb.velocity = Vector3.Lerp(player.rb.velocity, moveVelocity, 0.9f);
             }
             else
             {
