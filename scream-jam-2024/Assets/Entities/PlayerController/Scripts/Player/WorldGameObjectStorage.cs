@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class WorldGameObjectStorage : MonoBehaviour
     public PlayerManager player;
     public GameObject cameraHolder;
     public GameObject mainCam;
+    public CinemachineBrain brain;
     
 
     private void Awake()
