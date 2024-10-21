@@ -15,12 +15,27 @@ public class PlayerInventoryUIManager : MonoBehaviour
     [Header("Interact")]
     public TextMeshProUGUI interactText;
 
+    [Header("Keys")]
+    public int keyCount = 0;
+    public TextMeshProUGUI keyText;
+    public int keysRequired = 5;
+
     private void Awake()
     {
         if (Instance == null)
             Instance = this;
 
         interactText.enabled = false;
+    }
+
+    private void Update()
+    {
+        UpdateKeyUi();
+    }
+
+    public void UpdateKeyUi()
+    {
+        keyText.text = keyCount + " / " + keysRequired;
     }
     public void LinkItemIcon(Item item, int index)
     {

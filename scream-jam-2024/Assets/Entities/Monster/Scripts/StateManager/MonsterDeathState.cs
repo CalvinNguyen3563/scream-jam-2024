@@ -10,7 +10,7 @@ public class MonsterDeathState : MonsterBaseState
         stateManager.animator.SetLayerWeight(1, 1);
         stateManager.animator.Play("Mutant Death", 1);
 
-
+        stateManager.monster.headRig.weight = 0;
     }
 
     public override void UpdateState(MonsterStateManager stateManager)

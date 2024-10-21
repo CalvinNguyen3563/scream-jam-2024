@@ -150,6 +150,7 @@ MonoBehaviour:
   state: 1
   animation: {fileID: 7517271823959826206}
   triggerCollider: {fileID: 3234228308779248288}
+  outline: {fileID: 2220909671559107159}
   itemInside: {fileID: 9021331423119708186}
   opened: 0
 --- !u!1 &1707948082298682291

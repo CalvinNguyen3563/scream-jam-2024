@@ -17,7 +17,7 @@ public class KeyInteract : MonoBehaviour, Interactable
 
     public void PerformSpecialAction()
     {
-        Debug.Log("Key collected");
+        ++PlayerInventoryUIManager.Instance.keyCount;
         DestroyItem();
     }
 
