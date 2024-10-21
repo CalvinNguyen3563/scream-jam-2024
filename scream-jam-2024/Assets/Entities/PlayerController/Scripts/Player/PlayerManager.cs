@@ -23,9 +23,17 @@ public class PlayerManager : MonoBehaviour
     public bool isGrounded;
     public float groundCheckRadius = 2f;
     public LayerMask whatIsGround;
+    
 
     [Header("Layer Mask")]
     public LayerMask whatIsEnemy;
+    public LayerMask whatIsWater;
+
+    [Header("Water")]
+    public float waterDmg = 10f;
+    public bool canWaterDmg = true;
+    public float waterDmgCooldown = 1.5f;
+
 
     private void Awake()
     {
@@ -46,6 +54,22 @@ public class PlayerManager : MonoBehaviour
     public void DetectGround()
     {
         isGrounded = Physics.OverlapSphere(legs.position, groundCheckRadius, whatIsGround).Length > 0;
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (((1 << collision.gameObject.layer) & whatIsWater) != 0 && canWaterDmg)
+        {
+            PlayerStatsManager.Instance.DecreaseHealth(waterDmg);
+            StartCoroutine(resetWaterCooldown(waterDmgCooldown));
+        }
+    }
+
+    private IEnumerator resetWaterCooldown(float time)
+    {
+        canWaterDmg = false;
+        yield return new WaitForSeconds(time);
+        canWaterDmg = true;
     }
 
     private void OnDrawGizmos()

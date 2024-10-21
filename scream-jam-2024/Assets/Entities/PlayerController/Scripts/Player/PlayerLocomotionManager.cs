@@ -102,7 +102,7 @@ public class PlayerLocomotionManager : MonoBehaviour
 
             if (player.rb.velocity.magnitude < speedCap)
             {
-                player.rb.velocity = Vector3.Lerp(player.rb.velocity, moveVelocity, 0.9f);
+                player.rb.velocity = Vector3.Lerp(player.rb.velocity, moveVelocity, 0.1f);
             }
             else
             {
