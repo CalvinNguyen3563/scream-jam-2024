@@ -34,6 +34,9 @@ public class PlayerManager : MonoBehaviour
     public bool canWaterDmg = true;
     public float waterDmgCooldown = 1.5f;
 
+    [Header("IsDead")]
+    public bool isDead = false;
+
 
     private void Awake()
     {
@@ -49,6 +52,12 @@ public class PlayerManager : MonoBehaviour
     void Update()
     {
         DetectGround();
+
+        if (PlayerStatsManager.Instance.Health <= 0 && !isDead)
+        {
+            isDead = true;
+            PlayerDeathScript.Instance.ActiveDeath();
+        }
     }
 
     public void DetectGround()

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AxeChestInteract : MonoBehaviour, Interactable
 {
@@ -9,6 +10,8 @@ public class AxeChestInteract : MonoBehaviour, Interactable
     public Animation animation;
     public Collider triggerCollider;
 
+    public Outline outline;
+
     public GameObject itemInside;
 
     public bool opened = false;
@@ -16,6 +19,19 @@ public class AxeChestInteract : MonoBehaviour, Interactable
     private void Awake()
     {
         itemInside.SetActive(false);
+        outline.interactMsg = "You require " + PlayerInventoryUIManager.Instance.keyCount + " / " + PlayerInventoryUIManager.Instance.keysRequired + " keys to open.";
+    }
+
+    private void Update()
+    {
+        if (PlayerInventoryUIManager.Instance.keyCount >= PlayerInventoryUIManager.Instance.keysRequired)
+        {
+            outline.interactMsg = "Open chest"; 
+        }
+        else
+        {
+            outline.interactMsg = "You require " + PlayerInventoryUIManager.Instance.keyCount + " / " + PlayerInventoryUIManager.Instance.keysRequired + " keys to open.";
+        }
     }
 
     public Item GetItemInfo()
@@ -25,14 +41,21 @@ public class AxeChestInteract : MonoBehaviour, Interactable
 
     public void PerformSpecialAction()
     {
+       
         if (opened)
         {
             return; 
         }
-        animation.Play();
-        itemInside.SetActive(true);
-        StartCoroutine(WaitForAnimation(2f));
-        opened = true;
+
+        if (PlayerInventoryUIManager.Instance.keyCount >= PlayerInventoryUIManager.Instance.keysRequired)
+        {
+            
+            animation.Play();
+            itemInside.SetActive(true);
+            StartCoroutine(WaitForAnimation(2f));
+            opened = true;
+        }
+        
     }
 
     public IEnumerator WaitForAnimation(float time)

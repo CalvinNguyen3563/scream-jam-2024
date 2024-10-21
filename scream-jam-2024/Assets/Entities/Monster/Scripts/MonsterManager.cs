@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Animations.Rigging;
 
 public class MonsterManager : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class MonsterManager : MonoBehaviour
 
     [Header("Layer")]
     public LayerMask whatIsPlayer;
+
+    [Header("Rig")]
+    public Rig headRig;
     private void Awake()
     {
         monsterLocomotionManager = GetComponent<MonsterLocomotionManager>();
