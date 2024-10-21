@@ -7,21 +7,16 @@ public class GamePauser : MonoBehaviour
 {
     public GameObject pauseMenu;
     private bool isPaused;
-    public static GamePauser instance;
     public CinemachineBrain brain;
 
     void Awake()
     {
-        if (instance == null)
-            instance = this;
-        else
-            Destroy(this);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        brain = WorldGameObjectStorage.Instance.brain;
     }
 
     // Update is called once per frame
@@ -32,14 +27,12 @@ public class GamePauser : MonoBehaviour
             if (isPaused)
             {
                 ResumeGame();
-                brain.enabled = true;
-                Cursor.lockState = CursorLockMode.Locked;
+                
             }
             else
             {
                 PauseGame();
-                brain.enabled = false;
-                Cursor.lockState = CursorLockMode.None;
+                
             }
         }
     }
@@ -52,6 +45,9 @@ public class GamePauser : MonoBehaviour
             pauseMenu.SetActive(true);
             Time.timeScale = 0f; // Stop the game time
             isPaused = true;
+            brain.enabled = false;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 
@@ -63,6 +59,9 @@ public class GamePauser : MonoBehaviour
             pauseMenu.SetActive(false);
             Time.timeScale = 1f; // Resume game time
             isPaused = false;
+            brain.enabled = true;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 }
