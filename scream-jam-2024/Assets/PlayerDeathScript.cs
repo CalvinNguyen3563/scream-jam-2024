@@ -23,6 +23,6 @@ public class PlayerDeathScript : MonoBehaviour
         playerCamera.enabled = false;
         cameraCollider.isTrigger = false;
 
-        rb.angularVelocity = new Vector3(0, 0, 20f);    
+        rb.angularVelocity = new Vector3(100f, 100f, 100f);    
     }
 }

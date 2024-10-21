@@ -54,9 +54,29 @@ public class MonsterCombatScript : MonoBehaviour
             {
                 PlayerStatsManager.Instance.DecreaseHealth(damage);
                 collidersDamaged.Add(collidersToDamage[i]);
+                BlastPlayer();
                 
             }
         }
 
+    }
+
+    public void BlastPlayer()
+    { 
+
+        PlayerManager player = WorldGameObjectStorage.Instance.player;
+        StartCoroutine(StopPlayerMovement(player));
+        player.rb.AddForce(transform.forward * 50f, ForceMode.Impulse);
+
+
+    }
+
+    public IEnumerator StopPlayerMovement(PlayerManager player)
+    {
+        player.playerLocomotionManager.stopMoving = true;
+
+        yield return new WaitForSeconds(0.1f);
+
+        player.playerLocomotionManager.stopMoving = false;
     }
 }

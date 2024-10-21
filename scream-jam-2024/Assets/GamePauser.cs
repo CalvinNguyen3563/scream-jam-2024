@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class GamePauser : MonoBehaviour
     public GameObject pauseMenu;
     private bool isPaused;
     public static GamePauser instance;
+    public CinemachineBrain brain;
 
     void Awake()
     {
@@ -30,10 +32,14 @@ public class GamePauser : MonoBehaviour
             if (isPaused)
             {
                 ResumeGame();
+                brain.enabled = true;
+                Cursor.lockState = CursorLockMode.Locked;
             }
             else
             {
                 PauseGame();
+                brain.enabled = false;
+                Cursor.lockState = CursorLockMode.None;
             }
         }
     }

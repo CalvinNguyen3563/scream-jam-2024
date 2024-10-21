@@ -18,6 +18,8 @@ public class PlayerLocomotionManager : MonoBehaviour
     [Header("Movement Flags")]
     public bool isSprinting = false;
 
+    public bool stopMoving = false;
+
     private void Awake()
     {
         
@@ -45,6 +47,10 @@ public class PlayerLocomotionManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (stopMoving)
+        {
+            return;
+        }
         HandlePlayerMovement();
         //HandleGravity();
     }
