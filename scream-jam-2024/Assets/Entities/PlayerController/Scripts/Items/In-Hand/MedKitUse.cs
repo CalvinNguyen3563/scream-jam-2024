@@ -9,6 +9,8 @@ public class MedKitUse : MonoBehaviour, UseItem
     public float healValue;
     private bool used = false;
     public Animator animator;
+
+    public AudioClip openClip;
     private void Awake()
     {
         StartCoroutine(DisableObject(invisibleTime));
@@ -23,6 +25,7 @@ public class MedKitUse : MonoBehaviour, UseItem
 
     private void UseEffect()
     {
+        SoundManager.instance.PlaySoundFXClip(openClip, transform.position, 1f);
         PlayerStatsManager.Instance.IncreaseHealth(healValue);
         WorldGameObjectStorage.Instance.player.playerInteractableManager.DestroyEquippedItem();
     }

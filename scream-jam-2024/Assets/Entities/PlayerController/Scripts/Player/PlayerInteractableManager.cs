@@ -39,6 +39,9 @@ public class PlayerInteractableManager : MonoBehaviour
     {
         player = WorldGameObjectStorage.Instance.player;
         playerInventoryUIManager = PlayerInventoryUIManager.Instance;
+
+        currentItemIndex = 0;
+        playerInventoryUIManager.UpdateSelectBorder(0);
     }
 
     private void Update()
