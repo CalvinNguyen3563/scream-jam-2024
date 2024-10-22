@@ -8,10 +8,10 @@ public class PlayerDeathScript : MonoBehaviour
     public Rigidbody rb;
     public PlayerCamera playerCamera;
     public static PlayerDeathScript Instance;
+    public AudioClip clip;
 
     [Header("DeathMenu")]
     public GamePauser pauser;
-    public float restartDelay = 1.5f;
 
     private void Awake()
     {
@@ -26,14 +26,15 @@ public class PlayerDeathScript : MonoBehaviour
         rb.isKinematic = false;
         playerCamera.enabled = false;
         cameraCollider.isTrigger = false;
+        SoundManager.instance.PlaySoundFXClip(clip, WorldGameObjectStorage.Instance.player.transform.position, 1f);
 
-        StartCoroutine(delayDeathMenu(restartDelay));
+        StartCoroutine(delayDeathMenu(1.5f));
         rb.angularVelocity = new Vector3(100f, 100f, 100f);   
     }
 
     public IEnumerator delayDeathMenu(float time)
     {
-        yield return new WaitForSeconds(restartDelay);
+        yield return new WaitForSeconds(time);
 
         pauser.PauseGame();
     }

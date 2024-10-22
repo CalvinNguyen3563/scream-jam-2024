@@ -16,6 +16,8 @@ public class AxeChestInteract : MonoBehaviour, Interactable
 
     public bool opened = false;
 
+    public AudioClip clip;
+
     private void Start()
     {
         itemInside.SetActive(false);
@@ -49,7 +51,7 @@ public class AxeChestInteract : MonoBehaviour, Interactable
 
         if (PlayerInventoryUIManager.Instance.keyCount >= PlayerInventoryUIManager.Instance.keysRequired)
         {
-            
+            SoundManager.instance.PlaySoundFXClip(clip, transform.position, 1f);
             animation.Play();
             itemInside.SetActive(true);
             StartCoroutine(WaitForAnimation(2f));

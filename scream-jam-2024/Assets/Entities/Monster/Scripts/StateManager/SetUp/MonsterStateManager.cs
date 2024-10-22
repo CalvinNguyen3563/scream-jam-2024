@@ -42,8 +42,10 @@ public class MonsterStateManager : MonoBehaviour
     [Header("AudioClip")]
     public AudioClip roarClip;
     public AudioClip attackClip;
+    public AudioClip stunClip;
+    public AudioClip deathClip;
 
-    
+    public bool isDead = false;
    
     private void Awake()
     {
@@ -60,8 +62,9 @@ public class MonsterStateManager : MonoBehaviour
 
     private void Update()
     {
-        if (MonsterStatsManager.Instance.health <= 0)
+        if (MonsterStatsManager.Instance.health <= 0 && !isDead)
         {
+            isDead = true;
             SwitchState(deathState);
         }
         
