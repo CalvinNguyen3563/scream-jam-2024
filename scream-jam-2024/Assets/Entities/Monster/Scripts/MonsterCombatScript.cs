@@ -66,7 +66,7 @@ public class MonsterCombatScript : MonoBehaviour
 
         PlayerManager player = WorldGameObjectStorage.Instance.player;
         StartCoroutine(StopPlayerMovement(player));
-        player.rb.AddForce(transform.forward * 50f, ForceMode.Impulse);
+        player.rb.AddForce(transform.forward * 25f, ForceMode.Impulse);
 
 
     }

@@ -151,7 +151,7 @@ public class PlayerInteractableManager : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.G))
+            if (Input.GetKeyDown(KeyCode.G) || Input.GetKeyDown(KeyCode.Mouse0))
             {
                 DropItem(currentEquippedItem, currentItemIndex);
             }
@@ -256,7 +256,7 @@ public class PlayerInteractableManager : MonoBehaviour
                 float horizontalForce = 5f;  
                 float verticalForce = 5f;  
                 Vector3 arcForce = forwardDirection * horizontalForce + Vector3.up * verticalForce;
-                itemRb.AddForce(arcForce, ForceMode.Impulse);
+                itemRb.AddForce(WorldGameObjectStorage.Instance.player.rb.velocity + arcForce, ForceMode.Impulse);
 
                 Vector3 spin = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * 5f; 
                 itemRb.angularVelocity = spin;
