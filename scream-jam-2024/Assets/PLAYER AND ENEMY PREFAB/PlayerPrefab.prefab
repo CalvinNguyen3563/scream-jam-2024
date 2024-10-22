@@ -473,8 +473,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5916195870107659850}
-        m_TargetAssemblyTypeName: GameResumer, Assembly-CSharp
+      - m_Target: {fileID: 5884540740397786383}
+        m_TargetAssemblyTypeName: GamePauser, Assembly-CSharp
         m_MethodName: ResumeGame
         m_Mode: 1
         m_Arguments:
@@ -3794,6 +3794,55 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &6215541725449399754
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1717551438818925689}
+  - component: {fileID: 4941968725950196474}
+  m_Layer: 0
+  m_Name: PostProcessingBlack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1717551438818925689
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6215541725449399754}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1580731616994545388}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4941968725950196474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6215541725449399754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 7172d77d9c12f70488eee5df8a88a546, type: 2}
 --- !u!1 &6597952335722835877
 GameObject:
   m_ObjectHideFlags: 0
@@ -4522,6 +4571,7 @@ MonoBehaviour:
   player: {fileID: 5904224210046506755}
   cameraHolder: {fileID: 453662313992343171}
   mainCam: {fileID: 2301740741959496749}
+  brain: {fileID: 874732401748911390}
 --- !u!1 &8166679967316241768
 GameObject:
   m_ObjectHideFlags: 0
@@ -4531,7 +4581,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7225670530937938399}
-  - component: {fileID: 5916195870107659850}
   m_Layer: 5
   m_Name: GameResumer
   m_TagString: Untagged
@@ -4558,19 +4607,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5916195870107659850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8166679967316241768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebe63d1bb51a8dc409e404a7dba28325, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 8265361413714608840}
 --- !u!1 &8265361413714608840
 GameObject:
   m_ObjectHideFlags: 0
@@ -5317,11 +5353,11 @@ PrefabInstance:
       objectReference: {fileID: 5904224210046506755}
     - target: {fileID: 2950953710312077163, guid: 23e823dbfc3569d4bac230e411ad9933, type: 3}
       propertyPath: maxSpeed
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2950953710312077163, guid: 23e823dbfc3569d4bac230e411ad9933, type: 3}
       propertyPath: moveSpeed
-      value: 30
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2950953710312077163, guid: 23e823dbfc3569d4bac230e411ad9933, type: 3}
       propertyPath: sprintFOV
@@ -5337,11 +5373,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2950953710312077163, guid: 23e823dbfc3569d4bac230e411ad9933, type: 3}
       propertyPath: maxSprintSpeed
-      value: 10
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 2950953710312077163, guid: 23e823dbfc3569d4bac230e411ad9933, type: 3}
       propertyPath: sprintMoveSpeed
-      value: 30
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3312431664088511405, guid: 23e823dbfc3569d4bac230e411ad9933, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5353,7 +5389,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3312431664088511405, guid: 23e823dbfc3569d4bac230e411ad9933, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.5658436
+      value: 44.5
       objectReference: {fileID: 0}
     - target: {fileID: 3312431664088511405, guid: 23e823dbfc3569d4bac230e411ad9933, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5407,6 +5443,10 @@ PrefabInstance:
       propertyPath: playerCollider
       value: 
       objectReference: {fileID: 7582671799998156033}
+    - target: {fileID: 9135177513292609868, guid: 23e823dbfc3569d4bac230e411ad9933, type: 3}
+      propertyPath: groundCheckRadius
+      value: 0.52
+      objectReference: {fileID: 0}
     - target: {fileID: 9135177513292609868, guid: 23e823dbfc3569d4bac230e411ad9933, type: 3}
       propertyPath: whatIsEnemy.m_Bits
       value: 1024
@@ -5491,6 +5531,9 @@ MonoBehaviour:
   staminaUseValue: 0.35
   healthSlider: {fileID: 8394276182355608452}
   staminaSlider: {fileID: 8382134342250413276}
+  volume: {fileID: 8062375310037361349}
+  vignette: {fileID: 0}
+  timeToFlashRed: 1.5
 --- !u!114 &5904224210046506755 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9135177513292609868, guid: 23e823dbfc3569d4bac230e411ad9933, type: 3}
@@ -6844,6 +6887,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8083081457278083032, guid: ab066c9ee286aec4291d7ff00f754290, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5169051376853168535}
+    - targetCorrespondingSourceObject: {fileID: 8083081457278083032, guid: ab066c9ee286aec4291d7ff00f754290, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1717551438818925689}
     - targetCorrespondingSourceObject: {fileID: 2759730726265565084, guid: ab066c9ee286aec4291d7ff00f754290, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1994027000085444845}

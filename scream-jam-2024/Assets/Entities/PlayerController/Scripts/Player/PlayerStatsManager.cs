@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class PlayerStatsManager : MonoBehaviour
@@ -22,6 +25,17 @@ public class PlayerStatsManager : MonoBehaviour
     [Header("Sliders")]
     public Slider healthSlider;
     public Slider staminaSlider;
+
+    [Header("Post Processing")]
+    public Volume volume;
+    public Vignette vignette;
+    public float timeToFlashRed = 1.5f;
+
+    private void Start()
+    {
+        volume.profile.TryGet<Vignette>(out vignette);
+    }
+
 
     public float Health
     {
@@ -92,6 +106,8 @@ public class PlayerStatsManager : MonoBehaviour
         {
             Health -= value;
         }
+
+        StartCoroutine(FlashRed(timeToFlashRed));
     }
 
     public void IncreaseHealth(float value)
@@ -104,6 +120,8 @@ public class PlayerStatsManager : MonoBehaviour
         {
             Health += value;
         }
+
+        StartCoroutine(FlashGreen(timeToFlashRed));
     }
 
     private void UpdateStaminaSlider(float stamina)
@@ -157,7 +175,39 @@ public class PlayerStatsManager : MonoBehaviour
         }
     }
 
-   
+    public IEnumerator FlashRed(float time)
+    {
+        vignette.color.value = Color.red;   
+        float elapsedTime = 0;
+        Color originalColor = vignette.color.value;
 
-    
+        while (elapsedTime < time)
+        {
+            float fixedTime = elapsedTime / time;
+            vignette.color.value = Color.Lerp(originalColor, Color.black, fixedTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        vignette.color.value = Color.black;
+    }
+
+    public IEnumerator FlashGreen(float time)
+    {
+        vignette.color.value = Color.green;
+        float elapsedTime = 0;
+        Color originalColor = vignette.color.value;
+
+        while (elapsedTime < time)
+        {
+            float fixedTime = elapsedTime / time;
+            vignette.color.value = Color.Lerp(originalColor, Color.black, fixedTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        vignette.color.value = Color.black;
+    }
+
+
 }

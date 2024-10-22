@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class MonsterPatrolState : MonsterBaseState  
 {
     public MonsterStateManager stateManager;
+    public float runningThreshold = 45;
     public override void EnterState(MonsterStateManager stateManager)
     {
         this.stateManager = stateManager;
@@ -27,6 +28,15 @@ public class MonsterPatrolState : MonsterBaseState
                 stateManager.point = point;
                 stateManager.agent.SetDestination(point);
             }
+        }
+
+        if (Vector3.Distance(stateManager.transform.position, WorldGameObjectStorage.Instance.player.transform.position) > runningThreshold)
+        {
+            stateManager.agent.speed = stateManager.runningSpeed;
+        }
+        else
+        {
+            stateManager.agent.speed = stateManager.walkingSpeed;
         }
 
         DetectPlayer();
