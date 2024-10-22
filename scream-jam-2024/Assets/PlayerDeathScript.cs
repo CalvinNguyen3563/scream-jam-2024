@@ -9,6 +9,10 @@ public class PlayerDeathScript : MonoBehaviour
     public PlayerCamera playerCamera;
     public static PlayerDeathScript Instance;
 
+    [Header("DeathMenu")]
+    public GamePauser pauser;
+    public float restartDelay = 1.5f;
+
     private void Awake()
     {
         if (Instance == null)
@@ -23,6 +27,14 @@ public class PlayerDeathScript : MonoBehaviour
         playerCamera.enabled = false;
         cameraCollider.isTrigger = false;
 
-        rb.angularVelocity = new Vector3(100f, 100f, 100f);    
+        StartCoroutine(delayDeathMenu(restartDelay));
+        rb.angularVelocity = new Vector3(100f, 100f, 100f);   
+    }
+
+    public IEnumerator delayDeathMenu(float time)
+    {
+        yield return new WaitForSeconds(restartDelay);
+
+        pauser.PauseGame();
     }
 }

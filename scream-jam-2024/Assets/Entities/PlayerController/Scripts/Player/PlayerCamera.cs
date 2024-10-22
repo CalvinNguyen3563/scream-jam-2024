@@ -35,6 +35,7 @@ public class PlayerCamera : MonoBehaviour
     public GameObject[] cinemachineVirtualCameras;
     public int currentVirtualCameraIndex = 0;
 
+
     private bool[] isLerping;
 
     private void Awake()
@@ -78,6 +79,7 @@ public class PlayerCamera : MonoBehaviour
 
     private void HandleHeadBobbing()
     {
+
         if (playerManager.playerLocomotionManager.isSprinting)
         {
             SwitchCamera(2);
@@ -98,6 +100,7 @@ public class PlayerCamera : MonoBehaviour
         {
             if (camIndex != i)
             {
+                Debug.Log(i);
                 if (!isLerping[i])
                 {
                     isLerping[i] = true;
@@ -132,6 +135,5 @@ public class PlayerCamera : MonoBehaviour
         cam.transform.localPosition = targetPosition;
         isLerping[camIndex] = false;
     }
-
 
 }

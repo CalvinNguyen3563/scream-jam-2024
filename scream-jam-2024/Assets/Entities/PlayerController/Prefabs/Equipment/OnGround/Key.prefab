@@ -4959,6 +4959,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 1
+  src: {fileID: 0}
+  clip: {fileID: 8300000, guid: 95607afcfa6e1854994bf007e45ba791, type: 3}
 --- !u!65 &6812664630078721182
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class WorldGameObjectStorage : MonoBehaviour
     public GameObject cameraHolder;
     public GameObject mainCam;
     public CinemachineBrain brain;
+    public AudioSource playerSrc;
     
 
     private void Awake()
