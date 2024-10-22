@@ -33,6 +33,7 @@ public class PlayerCamera : MonoBehaviour
     public GameObject walkCam;
     public GameObject runCam;
     public GameObject[] cinemachineVirtualCameras;
+    public int currentVirtualCameraIndex = 0;
 
     private bool[] isLerping;
 
@@ -108,6 +109,7 @@ public class PlayerCamera : MonoBehaviour
 
         cinemachineVirtualCameras[camIndex].SetActive(true);
         currentVirtualCamera = cinemachineVirtualCameras[camIndex].GetComponent<CinemachineVirtualCamera>();
+        currentVirtualCameraIndex = camIndex;
     }
 
    
