@@ -11,10 +11,13 @@ public class MonsterChaseState : MonsterBaseState
     float elapsedTime = 0f;
     float attackCooldown = 2f;
     bool canAttack = true;
+
+    public bool firstAttack = false;
     public override void EnterState(MonsterStateManager stateManager)
     {
         stateManager.agent.acceleration = stateManager.runningAcceleration;
         stateManager.agent.speed = stateManager.runningSpeed;
+        firstAttack = false ;
     }
 
     public override void UpdateState(MonsterStateManager stateManager)
@@ -27,6 +30,16 @@ public class MonsterChaseState : MonsterBaseState
         {
             if (canAttack)
             {
+                if (!firstAttack)
+                {
+                    firstAttack = true;
+                    SoundManager.instance.PlaySoundFXClip(stateManager.roarClip, stateManager.orientation.transform.position, 1f);
+                }
+                else
+                {
+                    stateManager.PlayAttackAudio();
+                }
+
                 stateManager.animator.CrossFade("Mutant Swiping", 0.3f);
                 canAttack = false;
             }

@@ -71,6 +71,7 @@ MonoBehaviour:
   model: {fileID: 3074383338966104431}
   healValue: 30
   animator: {fileID: 718503931441710054}
+  openClip: {fileID: 8300000, guid: b209453fddeaf3d41b3c570c2fe90ffd, type: 3}
 --- !u!1 &1085904161124965178
 GameObject:
   m_ObjectHideFlags: 0

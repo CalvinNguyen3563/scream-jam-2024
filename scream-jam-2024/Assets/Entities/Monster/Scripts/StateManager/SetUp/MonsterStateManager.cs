@@ -39,6 +39,10 @@ public class MonsterStateManager : MonoBehaviour
     public LayerMask whatIsPlayer;
     public LayerMask whatIsObstacle;
 
+    [Header("AudioClip")]
+    public AudioClip roarClip;
+    public AudioClip attackClip;
+
     
    
     private void Awake()
@@ -84,6 +88,11 @@ public class MonsterStateManager : MonoBehaviour
 
         animator.SetBool("stunned", false);
         monster.fadeOutCoroutine = StartCoroutine(monster.FadeOutFire());
+    }
+
+    public void PlayAttackAudio()
+    {
+        SoundManager.instance.PlaySoundFXClip(attackClip, orientation.transform.position, 1f);
     }
 
     private void OnDrawGizmos()

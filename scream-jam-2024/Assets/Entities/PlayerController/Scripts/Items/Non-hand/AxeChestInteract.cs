@@ -16,7 +16,7 @@ public class AxeChestInteract : MonoBehaviour, Interactable
 
     public bool opened = false;
 
-    private void Awake()
+    private void Start()
     {
         itemInside.SetActive(false);
         outline.interactMsg = "You require " + PlayerInventoryUIManager.Instance.keyCount + " / " + PlayerInventoryUIManager.Instance.keysRequired + " keys to open.";
