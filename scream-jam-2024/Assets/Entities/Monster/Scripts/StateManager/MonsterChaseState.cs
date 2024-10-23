@@ -18,6 +18,7 @@ public class MonsterChaseState : MonsterBaseState
         stateManager.agent.acceleration = stateManager.runningAcceleration;
         stateManager.agent.speed = stateManager.runningSpeed;
         firstAttack = false ;
+        stateManager.agent.angularSpeed = 200f;
     }
 
     public override void UpdateState(MonsterStateManager stateManager)
@@ -25,7 +26,7 @@ public class MonsterChaseState : MonsterBaseState
         stateManager.agent.SetDestination(WorldGameObjectStorage.Instance.player.transform.position);
 
         float distance = Vector3.Distance(stateManager.transform.position, WorldGameObjectStorage.Instance.player.transform.position);
-
+        var clipInfo = stateManager.animator.GetCurrentAnimatorClipInfo(1);
         if (distance <= stateManager.agent.stoppingDistance + 0.5f)
         {
             if (canAttack)
@@ -43,7 +44,7 @@ public class MonsterChaseState : MonsterBaseState
                 stateManager.animator.CrossFade("Mutant Swiping", 0.3f);
                 canAttack = false;
             }
-            FaceTarget(WorldGameObjectStorage.Instance.player.transform.position, stateManager);
+            FaceTarget(WorldGameObjectStorage.Instance.player.transform.position, stateManager, clipInfo);
         }
 
         if (elapsedTime > attackCooldown)
@@ -52,7 +53,7 @@ public class MonsterChaseState : MonsterBaseState
             elapsedTime = 0f;
         }
 
-        var clipInfo = stateManager.animator.GetCurrentAnimatorClipInfo(1);
+        
 
         if (clipInfo.Length > 0)
         {
@@ -62,6 +63,7 @@ public class MonsterChaseState : MonsterBaseState
             {
                 stateManager.agent.speed = 0f;
                 stateManager.agent.acceleration = 40f;
+                stateManager.agent.angularSpeed = 0f;
             }
         }
         else
@@ -69,19 +71,33 @@ public class MonsterChaseState : MonsterBaseState
             // Default values if no clip is playing
             stateManager.agent.acceleration = stateManager.runningAcceleration;
             stateManager.agent.speed = stateManager.runningSpeed;
+            stateManager.agent.angularSpeed = 200f;
+
         }
 
 
         elapsedTime += Time.deltaTime; 
     }
 
-    private void FaceTarget(Vector3 destination, MonsterStateManager stateManager)
+    private void FaceTarget(Vector3 destination, MonsterStateManager stateManager, AnimatorClipInfo[] animator)
     {
+        if (animator.Length > 0)
+        {
+            string clipName = animator[0].clip.name;
+
+            if (clipName == "Mutant Swiping")
+            {
+                return;
+            }
+        }
+
         Vector3 lookPos = destination - stateManager.transform.position;
         lookPos.y = 0;
         Quaternion rotation = Quaternion.LookRotation(lookPos);
         stateManager.transform.rotation = Quaternion.Slerp(stateManager.transform.rotation, rotation, 7f * Time.deltaTime);
+      
     }
+          
 
 
 }

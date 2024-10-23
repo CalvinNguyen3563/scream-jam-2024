@@ -11,6 +11,7 @@ public class MonsterDeathState : MonsterBaseState
         stateManager.animator.Play("Mutant Death", 1);
 
         stateManager.monster.headRig.weight = 0;
+        SoundManager.instance.PlaySoundFXClip(stateManager.deathClip, stateManager.orientation.transform.position, 0.5f);
     }
 
     public override void UpdateState(MonsterStateManager stateManager)

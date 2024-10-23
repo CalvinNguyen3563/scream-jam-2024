@@ -77,9 +77,9 @@ MonoBehaviour:
   walkingAcceleration: 25
   walkingSpeed: 3.5
   runningAcceleration: 25
-  runningSpeed: 9
+  runningSpeed: 8
   patrolRange: 25
-  playerDetectRadius: 16.53
+  playerDetectRadius: 21.9
   playerInRadius: 1
   stepSize: 5
   pointFound: 0
@@ -90,6 +90,11 @@ MonoBehaviour:
   whatIsObstacle:
     serializedVersion: 2
     m_Bits: 2048
+  roarClip: {fileID: 8300000, guid: 816e9dac489ef704c92e5cecd035b018, type: 3}
+  attackClip: {fileID: 8300000, guid: 54c44dab334b70b419ea0e378ca74b00, type: 3}
+  stunClip: {fileID: 8300000, guid: 58502188e92ee184ea4664e04ffa0303, type: 3}
+  deathClip: {fileID: 8300000, guid: ef4fcebc2110de74abfaea83f87bf33d, type: 3}
+  isDead: 0
 --- !u!114 &5410824972814772163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,7 +143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  health: 1
+  health: 100
 --- !u!1 &4857726731190404137
 GameObject:
   m_ObjectHideFlags: 0
@@ -1504,7 +1509,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.32
+  m_Radius: 0.39
   m_Height: 2.1118093
   m_Direction: 1
   m_Center: {x: 0, y: 1.0234296, z: 0}

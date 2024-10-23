@@ -154,7 +154,7 @@ public class PlayerInteractableManager : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.G) || Input.GetKeyDown(KeyCode.Mouse0))
+            if (Input.GetKeyDown(KeyCode.G) || Input.GetKeyDown(KeyCode.Mouse1))
             {
                 DropItem(currentEquippedItem, currentItemIndex);
             }
@@ -169,16 +169,18 @@ public class PlayerInteractableManager : MonoBehaviour
 
     public void HandleItemPickup()
     {
-        if (itemCount >= itemSlots)
-            return;
+        
 
         if (Input.GetKeyDown(KeyCode.E) && previousOutline != null)
         {
+            
             Interactable interactable = previousOutline.GetComponent<Interactable>();
             playerInventoryUIManager.SetInteractText(false);
 
             if (interactable.GetItemState() == Interactable.itemState.inHand)
             {
+                if (itemCount >= itemSlots)
+                    return;
                 int i = 0;
                 bool foundValidSlot = false;
                 while (i < items.Length && !foundValidSlot)

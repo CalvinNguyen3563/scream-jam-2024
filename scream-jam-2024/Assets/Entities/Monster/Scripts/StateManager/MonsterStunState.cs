@@ -10,7 +10,8 @@ public class MonsterStunState : MonsterBaseState
     bool stunSet = false;
     public override void EnterState(MonsterStateManager stateManager)
     {
-        stateManager.StartCoroutine(stateManager.stun(stunTime)); 
+        stateManager.StartCoroutine(stateManager.stun(stunTime));
+        SoundManager.instance.PlaySoundFXClip(stateManager.stunClip, stateManager.orientation.transform.position, 1f);
         stunSet = true;
     }
 

@@ -90,6 +90,16 @@ public class PlayerStatsManager : MonoBehaviour
     private void FixedUpdate()
     {
         ReplenishStamina();
+
+        if (Health <= 40)
+        {
+            // Pulsate between red and light red
+            float pulseSpeed = 1f; // Speed of the pulsating effect
+            Color redColor = Color.red;
+            Color lightRedColor = new Color(1f, 0.5f, 0.5f); // A lighter shade of red
+            float time = Mathf.PingPong(Time.time * pulseSpeed, 1f); // Oscillates between 0 and 1
+            vignette.color.value = Color.Lerp(redColor, lightRedColor, time);
+        }
     }
     private void UpdateHealthSlider(float health)
     {
@@ -107,7 +117,11 @@ public class PlayerStatsManager : MonoBehaviour
             Health -= value;
         }
 
-        StartCoroutine(FlashRed(timeToFlashRed));
+
+        if (Health >= 25)
+        {
+            StartCoroutine(FlashRed(timeToFlashRed));
+        }
     }
 
     public void IncreaseHealth(float value)

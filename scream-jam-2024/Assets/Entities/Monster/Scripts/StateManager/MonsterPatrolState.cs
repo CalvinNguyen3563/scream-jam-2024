@@ -13,6 +13,7 @@ public class MonsterPatrolState : MonsterBaseState
         Debug.Log("patrol");
         stateManager.agent.acceleration = stateManager.walkingAcceleration;
         stateManager.agent.speed = stateManager.walkingSpeed;
+        stateManager.agent.angularSpeed = 200f;
     }
 
     public override void UpdateState(MonsterStateManager stateManager)
