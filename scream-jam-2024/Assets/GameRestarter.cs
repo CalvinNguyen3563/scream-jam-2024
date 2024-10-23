@@ -8,6 +8,7 @@ public class GameRestarter : MonoBehaviour
     {
         // Reloads the current scene.
         Scene currentScene = SceneManager.GetActiveScene();
+        Time.timeScale = 1.0f;
         SceneManager.LoadScene(currentScene.name);
     }
 }
