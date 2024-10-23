@@ -71,14 +71,7 @@ public class PlayerInventoryUIManager : MonoBehaviour
     {
         if (active)
         {
-            if (WorldGameObjectStorage.Instance.player.playerInteractableManager.itemCount >= 5)
-            {
-                interactText.color = Color.red;
-            }
-            else
-            {
-                interactText.color = Color.white;
-            }
+            interactText.color = Color.white;  
             interactText.enabled = true;
             interactText.text = text + "\n E";
         }

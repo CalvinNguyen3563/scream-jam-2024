@@ -20,7 +20,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5488217149110482137
 Transform:
   m_ObjectHideFlags: 0
@@ -79,7 +79,7 @@ MonoBehaviour:
   runningAcceleration: 25
   runningSpeed: 8
   patrolRange: 25
-  playerDetectRadius: 16.53
+  playerDetectRadius: 21.9
   playerInRadius: 1
   stepSize: 5
   pointFound: 0
@@ -1509,7 +1509,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.32
+  m_Radius: 0.39
   m_Height: 2.1118093
   m_Direction: 1
   m_Center: {x: 0, y: 1.0234296, z: 0}

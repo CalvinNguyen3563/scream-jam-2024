@@ -61,12 +61,16 @@ public class PlayerAnimatorManager : MonoBehaviour
 
     private void HandleUseAnimations()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse1) && 
+        if (Input.GetKeyDown(KeyCode.Mouse0) && 
             player.playerInteractableManager.rightHandObject != null &&
             player.playerInteractableManager.rightHandObject.TryGetComponent<UseItem>(out UseItem item))
         {
             item.UseItem();
             
+        }
+        else if (Input.GetKeyDown(KeyCode.Mouse0) && player.playerInteractableManager.currentEquippedItem != null && player.playerInteractableManager.currentEquippedItem.name == "Torch")
+        {
+            player.playerInteractableManager.DropItem(player.playerInteractableManager.currentEquippedItem, player.playerInteractableManager.currentItemIndex);
         }
     }
 

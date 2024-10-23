@@ -40,7 +40,7 @@ public class PlayerCombatManager : MonoBehaviour
     {
         bloodVFX.SetActive(true);
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
 
         bloodVFX.SetActive(false);
     }
