@@ -45,6 +45,9 @@ public class MonsterStateManager : MonoBehaviour
     public AudioClip stunClip;
     public AudioClip deathClip;
 
+
+    public Animation fadeAnimation;
+
     public bool isDead = false;
    
     private void Awake()
@@ -66,6 +69,7 @@ public class MonsterStateManager : MonoBehaviour
         {
             isDead = true;
             SwitchState(deathState);
+            StartCoroutine(FadeOut());
         }
         
         currentState.UpdateState(this);
@@ -74,6 +78,13 @@ public class MonsterStateManager : MonoBehaviour
 
         animator.SetFloat("velocity", agent.velocity.magnitude / runningSpeed);
         animator.SetFloat("horizontal", turnMovement);
+    }
+
+    public IEnumerator FadeOut()
+    {
+        yield return new WaitForSeconds(4f);
+
+        fadeAnimation.Play();
     }
 
     public void SwitchState(MonsterBaseState state)
