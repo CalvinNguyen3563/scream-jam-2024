@@ -11,7 +11,7 @@ public class PlayerDeathScript : MonoBehaviour
     public AudioClip clip;
 
     [Header("DeathMenu")]
-    public GamePauser pauser;
+    public GameObject pauser;
 
     private void Awake()
     {
@@ -36,6 +36,6 @@ public class PlayerDeathScript : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
 
-        pauser.PauseGame();
+        pauser.SetActive(true);
     }
 }
