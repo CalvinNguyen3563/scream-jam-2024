@@ -100,7 +100,6 @@ public class PlayerCamera : MonoBehaviour
         {
             if (camIndex != i)
             {
-                Debug.Log(i);
                 if (!isLerping[i])
                 {
                     isLerping[i] = true;

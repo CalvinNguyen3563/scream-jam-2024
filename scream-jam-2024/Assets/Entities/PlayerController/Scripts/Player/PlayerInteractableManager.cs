@@ -235,7 +235,10 @@ public class PlayerInteractableManager : MonoBehaviour
                 }
                 
                 playerInventoryUIManager.UpdateSelectBorder(currentItemIndex);
+                PlayerInventoryUIManager.Instance.FadeUseTextCommand();
             }
+
+            
         }
         else
         {
@@ -261,7 +264,8 @@ public class PlayerInteractableManager : MonoBehaviour
                 float horizontalForce = 5f;  
                 float verticalForce = 5f;  
                 Vector3 arcForce = forwardDirection * horizontalForce + Vector3.up * verticalForce;
-                itemRb.AddForce(WorldGameObjectStorage.Instance.player.rb.velocity + arcForce, ForceMode.Impulse);
+                Vector3 force = new Vector3(WorldGameObjectStorage.Instance.player.rb.velocity.x, WorldGameObjectStorage.Instance.player.rb.velocity.y, Mathf.Abs(WorldGameObjectStorage.Instance.player.rb.velocity.z));
+                itemRb.AddForce(force + arcForce, ForceMode.Impulse);
 
                 Vector3 spin = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * 5f; 
                 itemRb.angularVelocity = spin;

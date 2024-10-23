@@ -13,6 +13,8 @@ public class PlayerInventoryUIManager : MonoBehaviour
 
     [Header("Interact")]
     public TextMeshProUGUI interactText;
+    public TextMeshProUGUI useText;
+    public Coroutine fadeText;
 
     [Header("Keys")]
     public int keyCount = 0;
@@ -79,6 +81,44 @@ public class PlayerInventoryUIManager : MonoBehaviour
         {
             interactText.enabled = false;
         }
+    }
+
+    public void FadeUseTextCommand()
+    {
+        if (fadeText != null)
+        {
+            StopCoroutine(fadeText);
+        }
+        fadeText = StartCoroutine(FadeUseText());
+
+    }
+
+    public IEnumerator FadeUseText()
+    {
+        Color originalColor = useText.color;
+        originalColor.a = 1f;
+        useText.color = originalColor;
+
+        float timeElapsed = 0f;
+        float timeLimit = 1.5f;
+
+        while (timeElapsed < timeLimit)
+        {
+            // Calculate the alpha based on the elapsed time
+            float adjustTime = timeElapsed / timeLimit;
+
+            // Lerp the alpha from 1 (fully opaque) to 0 (fully transparent)
+            Color newColor = useText.color;
+            newColor.a = Mathf.Lerp(1f, 0f, adjustTime);
+            useText.color = newColor;
+
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure alpha is set to 0 at the end
+        Color finalColor = useText.color;
+        finalColor.a = 0f;
     }
 
 
